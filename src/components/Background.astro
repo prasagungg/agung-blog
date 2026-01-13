@@ -1,24 +1,81 @@
 <div class="fixed inset-0 z-0 pointer-events-none overflow-hidden bg-[#080d1a]">
     
-    <div class="absolute top-0 right-[-10%] w-125 h-125 rounded-full bg-linear-to-b from-cyan-200 to-blue-900 opacity-10 blur-3xl"></div>
+    <div class="absolute top-0 right-[-10%] w-125 h-125 rounded-full bg-linear-to-b from-cyan-200 to-blue-900 opacity-10 blur-3xl anim-float-slow"></div>
 
-    <div class="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_2px,transparent_2px),linear-gradient(90deg,rgba(255,255,255,0.03)_2px,transparent_2px)] bg-size-[50px_50px]"></div>
+    <div class="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_2px,transparent_2px),linear-gradient(90deg,rgba(255,255,255,0.03)_2px,transparent_2px)] bg-size-[50px_50px] anim-grid-scroll"></div>
 
     <svg class="absolute inset-0 w-full h-full" preserveAspectRatio="none">
         
-        <path d="M-200,900 L1600,-200" stroke="#06b6d4" stroke-width="120" opacity="0.05" />
-        <path d="M-200,1100 L1600,0" stroke="#1e3a8a" stroke-width="80" opacity="0.1" />
+        <path d="M-200,900 L1600,-200" stroke="#06b6d4" stroke-width="120" opacity="0.05" class="anim-drift-slow" />
+        <path d="M-200,1100 L1600,0" stroke="#1e3a8a" stroke-width="80" opacity="0.1" class="anim-drift-slower" />
 
-        <path d="M-100,700 L1200,-50" stroke="#22d3ee" stroke-width="12" vector-effect="non-scaling-stroke" opacity="0.6" />
+        <path d="M-100,700 L1200,-50" stroke="#22d3ee" stroke-width="12" vector-effect="non-scaling-stroke" class="anim-pulse-cyan" />
         
-        <path d="M-100,900 L1200,300" stroke="#3b82f6" stroke-width="6" vector-effect="non-scaling-stroke" opacity="0.4" />
+        <path d="M-100,900 L1200,300" stroke="#3b82f6" stroke-width="6" vector-effect="non-scaling-stroke" opacity="0.4" class="animate-pulse" />
         
-        <path d="M-100,1200 L600,1200 L-100,500 Z" fill="#001E43" stroke="#22d3ee" stroke-width="6" opacity="0.8" />
+        <path d="M-100,1200 L600,1200 L-100,500 Z" fill="#001E43" stroke="#22d3ee" stroke-width="6" opacity="0.6" class="anim-float-slow" />
         
-        <path d="M1000,-100 L900,200 L1100,500 L800,1200" stroke="white" stroke-width="4" fill="none" opacity="0.15" stroke-dasharray="20 10" />
+        <path d="M1000,-100 L900,200 L1100,500 L800,1200" stroke="white" stroke-width="4" fill="none" opacity="0.3" stroke-dasharray="20 50" class="anim-dash-flow" />
 
         <path d="M200,-100 L50,1200" stroke="#22d3ee" stroke-width="2" opacity="0.2" />
     </svg>
 
     <div class="absolute inset-0 bg-radial-gradient(circle at center, transparent 20%, #080d1a 90%)"></div>
 </div>
+
+<style>
+   
+
+    @keyframes grid-scroll {
+        0% { background-position: 0 0; }
+        100% { background-position: 50px 50px; }
+    }
+
+    @keyframes float-slow {
+        0%, 100% { transform: translateY(0) rotate(0deg); }
+        50% { transform: translateY(-20px) rotate(2deg); }
+    }
+
+    @keyframes pulse-cyan {
+        0%, 100% { opacity: 0.5; filter: brightness(1); stroke-width: 12; }
+        50% { opacity: 1; filter: brightness(1.3); stroke-width: 14; }
+    }
+
+    @keyframes dash-flow {
+        to { stroke-dashoffset: -700; } 
+    }
+
+    @keyframes drift-horizontal {
+        0% { transform: translateX(0); }
+        50% { transform: translateX(-50px); }
+        100% { transform: translateX(0); }
+    }
+
+
+
+    
+    .anim-grid-scroll {
+        animation: grid-scroll 15s linear infinite;
+    }
+
+    .anim-float-slow {
+        animation: float-slow 15s ease-in-out infinite;
+    }
+
+    .anim-pulse-cyan {
+        animation: pulse-cyan 3s ease-in-out infinite;
+        transition: stroke-width 0.3s ease; 
+    }
+
+    .anim-dash-flow {
+        animation: dash-flow 10s linear infinite;
+    }
+
+    .anim-drift-slow {
+        animation: drift-horizontal 20s ease-in-out infinite;
+    }
+
+    .anim-drift-slower {
+        animation: drift-horizontal 30s ease-in-out infinite reverse;
+    }
+</style>
