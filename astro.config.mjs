@@ -6,6 +6,8 @@ import tailwindcss from "@tailwindcss/vite";
 
 import vue from "@astrojs/vue";
 
+import cloudflare from "@astrojs/cloudflare";
+
 export default defineConfig({
   site: "https://example.com",
   integrations: [mdx(), sitemap(), vue()],
@@ -13,4 +15,6 @@ export default defineConfig({
   vite: {
     plugins: [tailwindcss()],
   },
+
+  adapter: cloudflare(),
 });
