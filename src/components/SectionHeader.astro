@@ -1,0 +1,19 @@
+---
+interface Props {
+  title: string;
+  variant?: 'cyan' | 'white'; 
+}
+
+const { title, variant = 'cyan' } = Astro.props;
+
+const textColor = variant === 'cyan' ? 'text-cyan-400' : 'text-white';
+const barColor = variant === 'cyan' ? 'bg-cyan-400' : 'bg-white';
+---
+
+<div class="flex items-center gap-4 mb-8">
+  <h2 class={`text-2xl font-black italic uppercase ${textColor} tracking-tight flex items-center gap-2`}>
+    <span class={`w-3 h-8 ${barColor} skew-x-12 block shadow-[0_0_10px_rgba(34,211,238,0.5)]`}></span>
+    {title}
+  </h2>
+  <div class="h-px grow bg-linear-to-r from-cyan-500/50 to-transparent mt-1"></div>
+</div>

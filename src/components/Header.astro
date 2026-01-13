@@ -1,0 +1,12 @@
+---
+import { SITE_TITLE } from '../consts';
+import CustomHeader from './CustomHeader.vue';
+
+const pathname = new URL(Astro.request.url).pathname;
+---
+
+<CustomHeader
+  client:load 
+  siteTitle={SITE_TITLE} 
+  currentPath={pathname} 
+/>

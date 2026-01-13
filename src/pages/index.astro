@@ -1,0 +1,97 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import Background from '../components/Background.astro'; 
+import Hero from '../components/Hero.astro';
+import SectionHeader from '../components/SectionHeader.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import PostRow from '../components/PostRow.astro';
+import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+
+import { getCollection } from 'astro:content';
+
+// --- 1. SETUP PROJECTS ---
+const allProjects = await getCollection('projects');
+const recentProjects = allProjects
+  .sort((a, b) => {
+     return parseInt(b.data.year || "0") - parseInt(a.data.year || "0");
+  })
+  .slice(0, 5);
+
+// --- 2. SETUP BLOG POSTS ---
+const allPosts = await getCollection('blog');
+const recentPosts = allPosts
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .slice(0, 5); // Ambil 5 teratas
+
+// Helper: Format tanggal untuk PostRow (contoh: "12 JAN")
+function formatDate(date: Date) {
+  const d = new Date(date);
+  const day = String(d.getDate()).padStart(2, '0');
+  const month = d.toLocaleString('en-US', { month: 'short' }).toUpperCase();
+  return `${day} ${month}`;
+}
+---
+
+<!doctype html>
+<html lang="id">
+  <head>
+    <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+  </head>
+  
+  <body class="bg-[#080d1a] text-slate-100 flex flex-col min-h-screen font-['Barlow',sans-serif] overflow-x-hidden selection:bg-cyan-400 selection:text-black">
+    <Header />
+    
+    <Background />
+
+    <main class="grow w-full max-w-[768px] mx-auto px-6 py-10 relative z-10 flex flex-col gap-14">
+      
+      <Hero />
+
+      {/* SECTION PROJECTS */}
+      <section>
+        <SectionHeader title="Recent Projects" variant="cyan" />
+        
+        <div class="grid gap-6">
+          {recentProjects.map((project) => (
+            <ProjectCard 
+              title={project.data.title}
+              desc={project.data.description}
+              tech={project.data.stacks}
+              link={`/projects/${project.slug}`}
+            />
+          ))}
+        </div>
+        
+        <div class="mt-6 text-right">
+            <a href="/projects" class="inline-flex items-center gap-2 text-sm font-bold text-cyan-400 hover:text-white transition-colors uppercase tracking-wider">
+                View All Projects <span class="text-lg">»</span>
+            </a>
+        </div>
+      </section>
+
+      <section>
+        <SectionHeader title="Log / Blog" variant="white" />
+
+        <div class="space-y-4">
+          {recentPosts.map((post) => (
+             <PostRow 
+                title={post.data.title}
+                date={formatDate(post.data.pubDate)}
+                link={`/blog/${post.slug}/`}
+             />
+          ))}
+        </div>
+
+        <div class="mt-6 text-right">
+            <a href="/blog" class="inline-flex items-center gap-2 text-sm font-bold text-slate-400 hover:text-cyan-400 transition-colors uppercase tracking-wider">
+                View All Posts <span class="text-lg">»</span>
+            </a>
+        </div>
+      </section>
+
+    </main>
+    <Footer />
+  </body>
+</html>

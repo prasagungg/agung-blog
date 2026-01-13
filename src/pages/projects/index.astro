@@ -1,0 +1,71 @@
+---
+import BaseHead from '../../components/BaseHead.astro';
+import Footer from '../../components/Footer.astro';
+import Header from '../../components/Header.astro';
+import Background from '../../components/Background.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+import { SITE_TITLE } from '../../consts';
+
+import { getCollection } from 'astro:content';
+
+const allProjects = await getCollection('projects');
+const projects = allProjects.sort((a, b) => {
+  const yearA = parseInt(a.data.year || "0");
+  const yearB = parseInt(b.data.year || "0");
+
+  return yearB - yearA;
+});
+---
+
+<!doctype html>
+<html lang="id">
+  <head>
+    <BaseHead title={`Projects | ${SITE_TITLE}`} description="Arsip proyek dan eksperimen koding." />
+  </head>
+  
+  <body class="bg-[#080d1a] text-slate-100 flex flex-col min-h-screen font-['Barlow',sans-serif] overflow-x-hidden selection:bg-cyan-400 selection:text-black">
+    <Header />
+    <Background />
+
+    <main class="grow w-full max-w-3xl mx-auto px-6 py-10 relative z-10 flex flex-col gap-10">
+      
+      <section class="relative">
+        <div class="relative z-10">
+            <h1 class="text-6xl md:text-7xl font-black italic tracking-tighter text-transparent bg-clip-text bg-linear-to-r from-cyan-400 to-white leading-[0.85] opacity-90">
+                PROJECT<br/>ARCHIVES
+            </h1>
+
+        </div>
+
+      
+      </section>
+
+     
+
+      <section class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+        {projects.map((project) => (
+            <div class="relative">
+                <div class="absolute -top-3 -right-2 z-20 bg-cyan-900 text-cyan-200 text-[10px] font-bold px-2 py-0.5 border border-cyan-500/50 skew-x-12 shadow-lg">
+                    <span class="block skew-x-12">{project.data.year}</span>
+                </div>
+                
+                <ProjectCard 
+                  title={project.data.title}
+                  desc={project.data.description}
+                  tech={project.data.stacks}
+                  link={`/projects/${project.slug}`}
+                />
+            </div>
+        ))}
+      </section>
+
+      <div class="flex items-center gap-4 opacity-50">
+        <div class="h-1 w-full bg-slate-800 skew-x-12"></div>
+        <span class="text-xs font-mono text-slate-500 whitespace-nowrap">END OF RECORDS</span>
+        <div class="h-1 w-full bg-slate-800 skew-x-12"></div>
+      </div>
+
+    </main>
+    <Footer />
+  </body>
+</html>

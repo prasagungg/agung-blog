@@ -1,0 +1,107 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import Background from '../components/Background.astro';
+import { SITE_TITLE } from '../consts';
+
+const contacts = [
+  {
+    name: "Email",
+    value: "agungprasetio878@gmail.com",
+    href: "mailto:agungprasetio878@gmail.com",
+    icon: "mail" 
+  },
+  {
+    name: "LinkedIn",
+    value: "Agung Prasetio",
+    href: "https://www.linkedin.com/in/agung-prasetio18",
+    icon: "linkedin"
+  },
+  {
+    name: "GitHub",
+    value: "prasagungg",
+    href: "https://github.com/prasagungg",
+    icon: "github"
+  },
+  {
+    name: "Instagram",
+    value: "@prasagungg",
+    href: "https://www.instagram.com/prasagungg",
+    icon: "instagram"
+  }
+];
+---
+
+<!doctype html>
+<html lang="id">
+  <head>
+    <BaseHead title={`Contact | ${SITE_TITLE}`} description="Hubungi saya untuk kolaborasi atau sekadar menyapa." />
+  </head>
+  
+  <body class="bg-[#080d1a] text-slate-100 flex flex-col min-h-screen font-['Barlow',sans-serif] overflow-x-hidden selection:bg-cyan-400 selection:text-black">
+    <Header />
+    <Background />
+
+    <main class="grow w-full max-w-3xl mx-auto px-6 py-10 relative z-10 flex flex-col gap-10">
+      
+      <section class="relative">
+        <div class="relative z-10">
+            <h1 class="text-6xl md:text-7xl font-black italic tracking-tighter text-transparent bg-clip-text bg-linear-to-r from-cyan-400 to-white leading-[0.85] opacity-90">
+                CONTACT<br/>ME
+            </h1>
+        </div>
+        <p class="mt-4 text-slate-400 text-lg max-w-md leading-relaxed">
+            Tertarik untuk berkolaborasi dalam project, atau sekadar ingin berdiskusi tentang teknologi? Temukan saya di platform berikut.
+        </p>
+      </section>
+
+      <section class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {contacts.map((contact) => (
+          <a href={contact.href} target="_blank" rel="noopener noreferrer" class="group relative block">
+            
+            <div class="absolute inset-0 bg-slate-900/50 border border-slate-800 skew-x-0 transition-transform duration-300 group-hover:-skew-x-2 group-hover:border-cyan-500/50 group-hover:shadow-[0_0_20px_rgba(34,211,238,0.1)]"></div>
+            
+            <div class="relative flex items-center gap-4 p-6 z-10">
+              <div class="text-cyan-400 group-hover:text-white group-hover:scale-110 transition-all duration-300">
+                {contact.icon === 'mail' && (
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                )}
+                {contact.icon === 'linkedin' && (
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+                )}
+                {contact.icon === 'github' && (
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+                )}
+                {contact.icon === 'instagram' && (
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                )}
+              </div>
+
+              <div class="flex flex-col">
+                <span class="text-xs font-mono text-slate-500 uppercase tracking-widest mb-1 group-hover:text-cyan-400 transition-colors">
+                  {contact.name}
+                </span>
+                <span class="font-bold text-lg text-slate-200 group-hover:text-white transition-colors">
+                  {contact.value}
+                </span>
+              </div>
+
+              <div class="ml-auto opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 text-cyan-400">
+                →
+              </div>
+            </div>
+          </a>
+        ))}
+      </section>
+
+      <div class="flex items-center gap-4 opacity-50 mt-12">
+        <div class="h-1 w-full bg-slate-800 skew-x-12"></div>
+        <span class="text-xs font-mono text-slate-500 whitespace-nowrap">STATUS: ONLINE</span>
+        <div class="h-1 w-full bg-slate-800 skew-x-12"></div>
+      </div>
+
+    </main>
+    <Footer />
+  </body>
+</html>

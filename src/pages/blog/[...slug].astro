@@ -1,0 +1,90 @@
+---
+import { type CollectionEntry, getCollection } from 'astro:content';
+import BaseHead from '../../components/BaseHead.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import Background from '../../components/Background.astro';
+import FormattedDate from '../../components/FormattedDate.astro';
+import { Image } from 'astro:assets';
+
+export async function getStaticPaths() {
+	const posts = await getCollection('blog');
+	return posts.map((post) => ({
+		params: { slug: post.slug },
+		props: post,
+	}));
+}
+type Props = CollectionEntry<'blog'>;
+
+const post = Astro.props;
+const { Content } = await post.render();
+---
+
+<!doctype html>
+<html lang="id">
+	<head>
+		<BaseHead title={post.data.title} description={post.data.description} />
+	</head>
+
+	<body class="bg-[#080d1a] text-slate-100 flex flex-col min-h-screen font-['Barlow',sans-serif] overflow-x-hidden selection:bg-cyan-400 selection:text-black">
+		<Header />
+		<Background />
+
+		<main class="grow w-full max-w-3xl mx-auto px-6 py-10 relative z-10 flex flex-col gap-8">
+			
+			<div class="mb-4">
+				<a href="/blog" class="group inline-flex items-center gap-2 text-sm font-mono text-cyan-500 hover:text-white transition-colors uppercase tracking-wider">
+					<span class="inline-block transform group-hover:-translate-x-1 transition-transform">«</span>
+					Back to Archives
+				</a>
+			</div>
+
+			<article class="flex flex-col gap-6">
+				<div class="space-y-4 border-b border-slate-800 pb-8">
+					<div class="flex flex-wrap items-center gap-4 text-sm font-mono">
+						<span class="text-cyan-400 bg-cyan-950/30 px-2 py-1 border border-cyan-900/50 rounded-sm">
+							<FormattedDate date={post.data.pubDate} />
+						</span>
+						
+						{post.data.tags && (
+							<div class="flex gap-2">
+								{post.data.tags.map((tag) => (
+									<span class="text-slate-400">#{tag}</span>
+								))}
+							</div>
+						)}
+					</div>
+
+					<h1 class="text-3xl md:text-5xl font-black leading-tight text-slate-100">
+						{post.data.title}
+					</h1>
+				</div>
+
+				{post.data.heroImage && (
+					<div class="relative w-full aspect-video rounded-xl overflow-hidden border border-slate-800 shadow-2xl">
+						<Image 
+							src={post.data.heroImage} 
+							alt={post.data.title} 
+							width={1020} 
+							height={510} 
+							class="w-full h-full object-cover"
+						/>
+						<div class="absolute inset-0 bg-linear-to-t from-[#080d1a]/50 to-transparent pointer-events-none"></div>
+					</div>
+				)}
+
+				<div class="markdown-content">
+          <Content />
+        </div>
+			</article>
+
+			<div class="flex items-center gap-4 opacity-50 mt-12 pt-8 border-t border-slate-800/50">
+				<div class="h-1 w-full bg-slate-800 skew-x-12"></div>
+				<span class="text-xs font-mono text-slate-500 whitespace-nowrap">END OF TRANSMISSION</span>
+				<div class="h-1 w-full bg-slate-800 skew-x-12"></div>
+			</div>
+
+		</main>
+		<Footer />
+	</body>
+</html>
