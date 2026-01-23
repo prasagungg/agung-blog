@@ -9,7 +9,7 @@ import vue from "@astrojs/vue";
 import cloudflare from "@astrojs/cloudflare";
 
 export default defineConfig({
-  site: "https://example.com",
+  site: "https://agung.kejarbahasa.com",
   integrations: [mdx(), sitemap(), vue()],
 
   vite: {
