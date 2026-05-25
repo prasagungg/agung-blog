@@ -7,16 +7,14 @@ import PostRow from '../../components/PostRow.astro';
 import { SITE_TITLE } from '../../consts';
 import { getCollection } from 'astro:content';
 
-// 1. Ambil data blog & urutkan dari terbaru
 const posts = (await getCollection('blog')).sort(
   (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
 );
 
-// 2. Helper function untuk format tanggal menjadi "DD MMM" (sesuai prop PostRow)
 function formatDateForRow(date: Date) {
   const d = new Date(date);
-  const day = String(d.getDate()).padStart(2, '0'); // "05", "12"
-  const month = d.toLocaleString('en-US', { month: 'short' }).toUpperCase(); // "JAN", "FEB"
+  const day = String(d.getDate()).padStart(2, '0'); 
+  const month = d.toLocaleString('en-US', { month: 'short' }).toUpperCase(); 
   return `${day} ${month}`;
 }
 ---
@@ -27,16 +25,15 @@ function formatDateForRow(date: Date) {
     <BaseHead title={`Blog | ${SITE_TITLE}`} description="Catatan perjalanan koding." />
   </head>
   
-  <body class="bg-[#080d1a] text-slate-100 flex flex-col min-h-screen font-['Barlow',sans-serif] overflow-x-hidden selection:bg-cyan-400 selection:text-black">
+  <body class="selection:bg-[var(--color-cozy-yellow)] selection:text-[var(--color-cozy-brown)]">
     <Header />
-    <Background />
 
     <main class="grow w-full max-w-3xl mx-auto px-6 py-10 relative z-10 flex flex-col gap-10">
       
       <section class="relative mb-4">
-        <div class="relative z-10">
-            <h1 class="text-6xl md:text-7xl font-black italic tracking-tighter text-transparent bg-clip-text bg-linear-to-r from-cyan-400 to-white leading-[0.85] opacity-90">
-                BLOG<br/>ARCHIVES
+        <div class="relative z-10 dialogue-box bg-[var(--color-cozy-cream)]">
+            <h1 class="text-4xl md:text-5xl font-pixel font-bold text-[var(--color-cozy-brown)] leading-tight uppercase tracking-wide">
+                Blog
             </h1>
         </div>
       </section>
@@ -51,11 +48,7 @@ function formatDateForRow(date: Date) {
         ))}
       </section>
 
-      <div class="flex items-center gap-4 opacity-50 mt-8">
-        <div class="h-1 w-full bg-slate-800 skew-x-12"></div>
-        <span class="text-xs font-mono text-slate-500 whitespace-nowrap">END OF RECORDS</span>
-        <div class="h-1 w-full bg-slate-800 skew-x-12"></div>
-      </div>
+
 
     </main>
     <Footer />

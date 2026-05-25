@@ -26,42 +26,41 @@ const { Content } = await post.render();
 		<BaseHead title={post.data.title} description={post.data.description} />
 	</head>
 
-	<body class="bg-[#080d1a] text-slate-100 flex flex-col min-h-screen font-['Barlow',sans-serif] overflow-x-hidden selection:bg-cyan-400 selection:text-black">
+	<body class="selection:bg-[var(--color-cozy-yellow)] selection:text-[var(--color-cozy-brown)]">
 		<Header />
-		<Background />
 
 		<main class="grow w-full max-w-3xl mx-auto px-6 py-10 relative z-10 flex flex-col gap-8">
 			
 			<div class="mb-4">
-				<a href="/blog" class="group inline-flex items-center gap-2 text-sm font-mono text-cyan-500 hover:text-white transition-colors uppercase tracking-wider">
+				<a href="/blog" class="group inline-flex items-center gap-2 text-sm font-pixel font-bold text-[var(--color-cozy-sage)] hover:text-[var(--color-cozy-orange)] transition-colors uppercase tracking-wider">
 					<span class="inline-block transform group-hover:-translate-x-1 transition-transform">«</span>
-					Back to Archives
+					Back to Blog
 				</a>
 			</div>
 
-			<article class="flex flex-col gap-6">
-				<div class="space-y-4 border-b border-slate-800 pb-8">
-					<div class="flex flex-wrap items-center gap-4 text-sm font-mono">
-						<span class="text-cyan-400 bg-cyan-950/30 px-2 py-1 border border-cyan-900/50 rounded-sm">
+			<article class="pixel-box bg-white flex flex-col gap-6">
+				<div class="space-y-4 border-b-4 border-dashed border-[var(--color-cozy-brown)]/30 pb-8">
+					<div class="flex flex-wrap items-center gap-4 text-sm font-pixel">
+						<span class="text-[var(--color-cozy-brown)] bg-[var(--color-cozy-yellow)] px-2 py-1 border-2 border-dashed border-[var(--color-cozy-brown)]">
 							<FormattedDate date={post.data.pubDate} />
 						</span>
 						
 						{post.data.tags && (
 							<div class="flex gap-2">
 								{post.data.tags.map((tag) => (
-									<span class="text-slate-400">#{tag}</span>
+									<span class="text-[var(--color-cozy-sage)] border-2 border-[var(--color-cozy-sage)] px-1">#{tag}</span>
 								))}
 							</div>
 						)}
 					</div>
 
-					<h1 class="text-3xl md:text-5xl font-black leading-tight text-slate-100">
+					<h1 class="text-4xl md:text-5xl font-pixel font-bold leading-tight text-[var(--color-cozy-brown)]">
 						{post.data.title}
 					</h1>
 				</div>
 
 				{post.data.heroImage && (
-					<div class="relative w-full aspect-video rounded-xl overflow-hidden border border-slate-800 shadow-2xl">
+					<div class="relative w-full aspect-video border-4 border-[var(--color-cozy-brown)] shadow-[4px_4px_0px_rgba(62,44,37,0.15)] overflow-hidden">
 						<Image 
 							src={post.data.heroImage} 
 							alt={post.data.title} 
@@ -69,20 +68,15 @@ const { Content } = await post.render();
 							height={510} 
 							class="w-full h-full object-cover"
 						/>
-						<div class="absolute inset-0 bg-linear-to-t from-[#080d1a]/50 to-transparent pointer-events-none"></div>
 					</div>
 				)}
 
-				<div class="markdown-content">
+				<div class="markdown-content mt-4">
           <Content />
         </div>
 			</article>
 
-			<div class="flex items-center gap-4 opacity-50 mt-12 pt-8 border-t border-slate-800/50">
-				<div class="h-1 w-full bg-slate-800 skew-x-12"></div>
-				<span class="text-xs font-mono text-slate-500 whitespace-nowrap">END OF TRANSMISSION</span>
-				<div class="h-1 w-full bg-slate-800 skew-x-12"></div>
-			</div>
+
 
 		</main>
 		<Footer />

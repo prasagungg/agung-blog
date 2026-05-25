@@ -2,7 +2,6 @@
 import BaseHead from '../components/BaseHead.astro';
 import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
-import Background from '../components/Background.astro'; 
 import Hero from '../components/Hero.astro';
 import SectionHeader from '../components/SectionHeader.astro';
 import ProjectCard from '../components/ProjectCard.astro';
@@ -11,7 +10,6 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 
 import { getCollection } from 'astro:content';
 
-// --- 1. SETUP PROJECTS ---
 const allProjects = await getCollection('projects');
 const recentProjects = allProjects
   .sort((a, b) => {
@@ -19,13 +17,11 @@ const recentProjects = allProjects
   })
   .slice(0, 5);
 
-// --- 2. SETUP BLOG POSTS ---
 const allPosts = await getCollection('blog');
 const recentPosts = allPosts
   .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
-  .slice(0, 5); // Ambil 5 teratas
+  .slice(0, 5);
 
-// Helper: Format tanggal untuk PostRow (contoh: "12 JAN")
 function formatDate(date: Date) {
   const d = new Date(date);
   const day = String(d.getDate()).padStart(2, '0');
@@ -40,20 +36,18 @@ function formatDate(date: Date) {
     <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
   </head>
   
-  <body class="bg-[#080d1a] text-slate-100 flex flex-col min-h-screen font-['Barlow',sans-serif] overflow-x-hidden selection:bg-cyan-400 selection:text-black">
+  <body class="selection:bg-[var(--color-cozy-yellow)] selection:text-[var(--color-cozy-brown)]">
     <Header />
     
-    <Background />
-
     <main class="grow w-full max-w-[768px] mx-auto px-6 py-10 relative z-10 flex flex-col gap-14">
       
       <Hero />
 
       {/* SECTION PROJECTS */}
       <section>
-        <SectionHeader title="Recent Projects" variant="cyan" />
+        <SectionHeader title="Recent Projects" />
         
-        <div class="grid gap-6">
+        <div class="grid gap-6 sm:grid-cols-2">
           {recentProjects.map((project) => (
             <ProjectCard 
               title={project.data.title}
@@ -64,15 +58,15 @@ function formatDate(date: Date) {
           ))}
         </div>
         
-        <div class="mt-6 text-right">
-            <a href="/projects" class="inline-flex items-center gap-2 text-sm font-bold text-cyan-400 hover:text-white transition-colors uppercase tracking-wider">
-                View All Projects <span class="text-lg">»</span>
+        <div class="mt-6 text-right font-pixel">
+            <a href="/projects" class="inline-flex items-center gap-2 text-sm font-bold text-[var(--color-cozy-sage)] hover:text-[var(--color-cozy-orange)] transition-colors uppercase tracking-wider">
+                View All Projects
             </a>
         </div>
       </section>
 
       <section>
-        <SectionHeader title="Log / Blog" variant="white" />
+        <SectionHeader title="Latest Blog" />
 
         <div class="space-y-4">
           {recentPosts.map((post) => (
@@ -84,9 +78,9 @@ function formatDate(date: Date) {
           ))}
         </div>
 
-        <div class="mt-6 text-right">
-            <a href="/blog" class="inline-flex items-center gap-2 text-sm font-bold text-slate-400 hover:text-cyan-400 transition-colors uppercase tracking-wider">
-                View All Posts <span class="text-lg">»</span>
+        <div class="mt-6 text-right font-pixel">
+            <a href="/blog" class="inline-flex items-center gap-2 text-sm font-bold text-[var(--color-cozy-sage)] hover:text-[var(--color-cozy-orange)] transition-colors uppercase tracking-wider">
+                View All Posts 
             </a>
         </div>
       </section>
